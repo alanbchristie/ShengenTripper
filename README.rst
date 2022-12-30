@@ -4,7 +4,6 @@ SchengenTripper
 A utility to add trips and check the length of stay in the Schengen area for any new
 trips.
 
-.. warning::
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
     INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
     PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
@@ -15,7 +14,8 @@ trips.
 =======
 Testing
 =======
-.. warning::
+
+Warning
     Running the unit tests will remove the local database. If you have recorded trips
     that you want to keep you must rename the database file (``schengen.db``) before
     you run any tests.
