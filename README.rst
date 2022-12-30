@@ -12,6 +12,7 @@ trips.
     CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
     OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+=======
 Testing
 =======
 .. warning::
@@ -24,14 +25,13 @@ From a clone of the repository::
     pip install --upgrade pip
     pip install -r build-requirements.txt
     pip install -r requirements.txt
-    
-    export PYTHONPATH=.
-    
+        
     black .
     mypy --install-types --non-interactive .
     coverage run -m pytest -v -m unit --strict-markers
     coverage report -m
 
+=======
 Running
 =======
 The app uses a SQLite database persisted in the file ``schengen.db``, which is
@@ -49,7 +49,7 @@ Now we can use the app to get the earliest arrival date for a new trip::
 
     ./schengen.py alan.christie --trip-duration 30
 
-And see a simple record of the days you've visited in the last 180 with::
+And, see a record of the days you've visited the area during the last 180 with::
     
     ./schengen.py alan.christie --spent
     
@@ -57,6 +57,4 @@ To reset the database simply delete the database file::
 
     rm schengen.db
 
----
-
-_dateutil: https://pypi.org/project/python-dateutil/
+.. _dateutil: https://pypi.org/project/python-dateutil/
