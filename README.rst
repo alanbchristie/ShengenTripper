@@ -4,6 +4,10 @@ SchengenTripper
 
 .. image:: https://img.shields.io/github/actions/workflow/status/alanbchristie/SchengenTripper/test.yaml
    :alt: GitHub Workflow Status
+.. image:: https://img.shields.io/github/v/release/alanbchristie/schengentripper
+   :alt: GitHub release (latest SemVer)
+.. image:: https://img.shields.io/github/license/alanbchristie/schengentripper
+   :alt: GitHub
 
 A Python 3 utility to record trips and check the length of new visits to the EU Schengen
 Area to ensure you don't break the current legal requirement not to spend more than
