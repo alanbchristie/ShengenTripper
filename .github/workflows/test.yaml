@@ -44,6 +44,8 @@ jobs:
         pip install -r requirements.txt
     - name: Static analysis
       run: |
+        pre-commit run --all-files
+        pygount --format=summary --suffix=md,py,yaml --names-to-skip=__init__.py
         black .
     - name: Unit test
       run: |

@@ -8,7 +8,6 @@ from collections import OrderedDict
 from datetime import date, timedelta
 from typing import Dict, List, Optional, Tuple
 
-from dateutil.parser import parse
 import humanize
 from sqlalchemy import create_engine, func, insert, select
 from sqlalchemy import Column, Date, ForeignKey, Integer, MetaData, String, Table
@@ -43,11 +42,11 @@ def presence_count_180(connection: Connection, *, user: _USER, at: date) -> int:
     area during the 180 days prior to the given date.
     """
     most_recent_date_180 = at - timedelta(days=180)
-    s = select([func.count(_PRESENCE.c.date)]).where(
+    select_ob = select([func.count(_PRESENCE.c.date)]).where(
         _PRESENCE.c.date > most_recent_date_180, _PRESENCE.c.user_id == user.id
     )
-    rp = connection.execute(s)
-    return int(rp.first().count_1)
+    result_proxy = connection.execute(select_ob)
+    return int(result_proxy.first().count_1)
 
 
 def presence_180(
@@ -60,15 +59,15 @@ def presence_180(
     An OrderedDict is returned where the first entry is the most recent visit date.
     """
     oldest_date_180 = at - timedelta(days=180)
-    s = (
+    select_ob = (
         select([_PRESENCE.c.date])
         .where(_PRESENCE.c.date > oldest_date_180, _PRESENCE.c.user_id == user.id)
         .order_by(_PRESENCE.c.date)
     )
-    rp = connection.execute(s)
-    response: OrderedDict = OrderedDict()
+    result_proxy = connection.execute(select_ob)
+    response: OrderedDict[date, int] = OrderedDict()
     days: int = 0
-    for presence in rp:
+    for presence in result_proxy:
         days += 1
         presence_date: date = presence[0]
         response[presence_date] = days
@@ -98,11 +97,11 @@ def add_trip(
     presence_date = arrival
     while presence_date <= departure:
         # Does a presence date exist for this date?
-        s = select([_PRESENCE]).where(
+        select_ob = select([_PRESENCE]).where(
             _PRESENCE.c.date == presence_date, _PRESENCE.c.user_id == user.id
         )
-        rp = connection.execute(s)
-        if not rp.first():
+        result_proxy = connection.execute(select_ob)
+        if not result_proxy.first():
             ins = insert(_PRESENCE).values(user_id=user.id, date=presence_date)
             _ = connection.execute(ins)
             num_days += 1
@@ -111,15 +110,16 @@ def add_trip(
 
 
 def get_or_add_user(connection: Connection, *, username: str) -> _USER:
-    s = select([_USER]).where(_USER.c.username == username)
-    rp = connection.execute(s)
-    user = rp.first()
+    """Gets or adds new users to the database."""
+    select_ob = select([_USER]).where(_USER.c.username == username)
+    result_proxy = connection.execute(select_ob)
+    user = result_proxy.first()
     if not user:
         ins = insert(_USER).values(username="alan.christie")
-        rp = connection.execute(ins)
-        s = select([_USER]).where(_USER.c.username == username)
-        rp = connection.execute(s)
-        user = rp.first()
+        _ = connection.execute(ins)
+        select_ob = select([_USER]).where(_USER.c.username == username)
+        result_proxy = connection.execute(select_ob)
+        user = result_proxy.first()
     assert user
     return user
 

@@ -1,4 +1,6 @@
 black
 coverage
 mypy
+pre-commit
+pygount
 pytest

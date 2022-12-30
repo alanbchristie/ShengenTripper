@@ -1,0 +1,11 @@
+[messages control]
+
+# Disable some distracting checks.
+# See http://pylint.pycqa.org/en/latest/user_guide/message-control.html
+#
+# R : (Refactoring) warnings
+disable = raise-missing-from,
+          too-many-locals,
+
+# Any specific classes/class instances to ignore?
+ignored-classes=SQLAlchemy
