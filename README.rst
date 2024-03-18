@@ -77,8 +77,9 @@ excluded from the repository (i.e. it's a private, local file).
 You can run the app to add some trips for a user. Here we add two trips
 against the user ``alan.christie``::
 
-    ./schengen.py alan.christie --arrival 4-nov-22 --departure 21-nov-22
-    ./schengen.py alan.christie --arrival 1-dec-22 --departure 7-dec-22
+    ./schengen.py alan.christie --arrival 2-sep-23 --departure 1-oct-23
+    ./schengen.py alan.christie --arrival 4-nov-23 --departure 18-nov-23
+    ./schengen.py alan.christie --arrival 14-feb-24 --departure 15-mar-24
 
 .. note::
     Dates are strings that can be interpreted by the Python `dateutil`_ package.
@@ -91,6 +92,10 @@ that will not result in a breach of the *90 day rule*::
 And, see a record of the days you've visited the area during the last 180 with::
 
     ./schengen.py alan.christie --spent
+
+Or, display the histogram of accumulated days between two dates with::
+
+    ./schengen.py alan.christie --histogram-180 --arrival 1-jan-23 --departure 1-jan-24
 
 To reset the database simply delete the database file::
 
