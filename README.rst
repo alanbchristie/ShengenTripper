@@ -82,7 +82,9 @@ against the user ``alan.christie``::
     ./schengen.py alan.christie --arrival 14-feb-24 --departure 15-mar-24
 
 .. note::
-    Dates are strings that can be interpreted by the Python `dateutil`_ package.
+    Dates are strings that are interpreted using the Python `dateutil`_ package,
+    which is configured to interpret the first value in an ambiguous 3-integer
+    date as the day, e.g. 01/05/09 is interpreted as the 1st of May 2009.
 
 Now we can use the app to get the earliest arrival date for a new trip, one
 that will not result in a breach of the *90 day rule*::
@@ -95,7 +97,7 @@ And, see a record of the days you've visited the area during the last 180 with::
 
 Or, display the histogram of accumulated days between two dates with::
 
-    ./schengen.py alan.christie --histogram-180 --arrival 1-jan-23 --departure 1-jan-24
+    ./schengen.py alan.christie --histogram-180 --arrival 1/5/23 --departure 1/5/24
 
 To reset the database simply delete the database file::
 

@@ -21,7 +21,13 @@ from datetime import date
 from typing import Any, Callable
 
 from dateutil.parser import parse
+from dateutil.parser import parserinfo
 from dateutil.parser import ParserError
+
+
+# Set the dateutil parser info to 'day-first'
+# so 01/05/09 is interpreted as 1st May 2009
+_PARSER_INFO = parserinfo(dayfirst=True)
 
 
 def ap_ranged_type(
@@ -50,9 +56,9 @@ def ap_date_type() -> Callable[[str], date]:
         except ValueError:
             raise argparse.ArgumentTypeError("Must be a valid str")
         try:
-            parse(value)
+            parse(value, parserinfo=_PARSER_INFO)
         except ParserError:
             raise argparse.ArgumentTypeError(f"Not a valid date [{arg}]")
-        return parse(value).date()
+        return parse(value, parserinfo=_PARSER_INFO).date()
 
     return date_checker
